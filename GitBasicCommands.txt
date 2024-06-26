@@ -1,0 +1,67 @@
+============================Git Commands===============================
+
+==========For Config==============
+
+0)git --version                                 <---Check version--->
+1)git config --global user.name  "username"     <---Add user name--->
+2)git config --global user.email  "useremail"   <---Add user email--->
+3)git config --list                             <---Check it set ot not--->
+
+==========Clone & Status==============
+
+0)git clone "somelink"                          <---Clone code from github--->
+1)git status                                    <---Check git status--->
+
+==========Git Init==============
+
+0)git init                                      <---Initialize git in code--->
+1)git remote add origin "link"                  <---Link your remote repo with local--->
+3)git remote -v                                 <---Check remote status--->
+4)git branch                                    <---Check all branch--->
+5)git branch -M "name"                          <---Create branch--->
+6)git push origin main                          <---Push code to github--->
+7)git push -u origin main                       <---For long term use only git push just set origin main first time using this command--->
+
+==========Add & Commit==============
+
+0)git add "filename"                             <---Add single file--->
+1)git add .                                      <----Add all files--->
+2)git commit -m "some message"                   <----Commint file--->
+3)git log                                        <----Check histroy--->
+
+==========Push==============
+
+0)git push origin main                           <---Push code to github--->
+1)git push -u origin main                        <---For long term use only git push just set origin main first time using this command--->
+
+==========Git Branch==============
+
+0)git branch                                    <---Check current branch --->
+1)git branch -M "name"                          <---Branch rename--->
+2)git checkout "branch name"                    <---Branch navigate--->
+3)git checkout -b "branch name"                 <---Branch create---> 
+4)git branch -d "branch name"                   <--- To delete branch--->
+
+==========Git Merging Branch==============
+
+0)git diff "compare branch name"                <---To compare branch --->
+1)git merge "compare branch name"               <---To merging 2 branch --->
+
+==========Git Pull Command==============
+
+0)git pull origin main                          <---Get data github to VSCode--->
+
+==========Git Undoing Change==============
+
+0) git reset "filename"                         <---For single staged change when you add code using git add undo this--->
+1) git reset                                    <---For all file staged change when you add code using git add undo this--->
+2) git reset Head~1                             <---For all file staged change when you add code using git commit undo this it undo only one stage--->
+3) get log                                      <----Check all commit hash--->
+4) git reset  "commit hash"                     <---For all file staged change when you add code using git commit undo this it undo only many stage--->
+5) git reset --hard "commit hash"               <---For all file staged change when you add code using git commit undo and file code also undo this it undo only many stage--->
+
+==========Git Fork==============
+
+work with other github project
+
+
