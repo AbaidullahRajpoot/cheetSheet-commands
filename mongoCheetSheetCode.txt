@@ -100,6 +100,15 @@ db.collection.find({ field: { $type: 'string' } }); Matches documents where the 
 
 ==========================================================================Join Example With Scenario=================================================================================
 
+{
+   _id: ObjectId,
+   userId: ObjectId,     // Reference to the user who placed the order
+   productId: ObjectId,  // Reference to the product ordered
+   quantity: Number,
+   orderDate: Date,
+   // Additional fields as needed
+}
+
 
 users collection:
 
