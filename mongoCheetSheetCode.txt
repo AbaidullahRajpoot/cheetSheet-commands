@@ -98,6 +98,27 @@ db.collection.find({ field: { $ne: value } });  Matches all values that are not 
 db.collection.find({ field: { $exists: true } });  Existence ($exists): Matches documents that have the specified field.
 db.collection.find({ field: { $type: 'string' } }); Matches documents where the value of a field is of a specific type.
 
+============Common Data Types in MongoDB=========
+
+String: Represents UTF-8 encoded strings.
+Example: "name": "Alice"
+Integer: Represents a 32-bit signed integer (int).
+Example: "age": 30
+Double: Represents a 64-bit floating-point number (double).
+Example: "price": 19.99
+Boolean: Represents a boolean value (true or false).
+Example: "active": true
+Date: Represents a date and time.
+Example: "createdAt": ISODate("2024-06-27T08:00:00Z")
+Array: Represents a list or array of values.
+Example: "tags": ["mongodb", "database", "nosql"]
+Object: Represents embedded documents or sub-documents.
+Example: "address": { "city": "New York", "state": "NY" }
+ObjectId: Represents a unique identifier (_id field in MongoDB documents).
+Example: "_id": ObjectId("60da9f5a4d12f6b80755a552")
+Null: Represents a null value.
+Example: "field": null
+
 ==========================================================================Join Example With Scenario=================================================================================
 
 {
