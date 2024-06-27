@@ -1,0 +1,189 @@
+
+================================================================================Mongo Database CheetSheet===========================================================================
+
+====================Insert Data=============
+
+db.collection('yourCollection').insertOne({
+    key1: value1,
+    key2: value2,
+});
+
+db.collection('yourCollection').insertMany([
+    {
+        key1: value1,
+        key2: value2,
+    },
+    {
+        key1: value1,
+        key2: value2,
+    },
+]);
+
+===========Retrieve All Documents=============
+
+db.collection('yourCollection').find();
+db.collection('yourCollection').find({ key: value });
+
+----------Hide password Column-------
+
+db.users.find({ role: 'admin' },{ password: 0 });
+
+===========Updating Document=============
+
+db.collection('yourCollection').updateOne(
+   { key: value }, // Filter condition to find the document
+   {
+      $set: {
+         field1: newValue1,
+         field2: newValue2,
+         // Additional fields to update
+      }
+   }
+);
+
+db.collection('yourCollection').updateMany(
+   { key: value }, // Filter condition to find documents
+   {
+      $set: {
+         field1: newValue1,
+         field2: newValue2,
+         // Additional fields to update
+      }
+   }
+);
+
+============Deleting Document=========
+
+db.collection('yourCollection').deleteOne({ filterCondition });
+db.collection('yourCollection').deleteMany({ filterCondition });
+
+============Logical Operators=========
+
+db.collection.find({
+    $and: [
+        { field1: { $eq: value1 } },
+        { field2: { $eq: value2 } }
+    ]
+})
+
+db.collection.find({
+    $or: [
+        { field1: { $eq: value1 } },
+        { field2: { $eq: value2 } }
+    ]
+})
+
+db.collection.find({
+    field: { $not: { $eq: value } }
+})
+
+db.collection.find({
+    $nor: [
+        { field1: { $eq: value1 } },
+        { field2: { $eq: value2 } }
+    ]
+})
+
+============Comparison Operators=========
+
+db.collection.find({ field: { $eq: value } }); Matches values that are equal to a specified value.
+db.collection.find({ field: { $lt: value } }); Matches values that are less than a specified value.
+db.collection.find({ field: { $gt: value } }); Matches values that are greater than a specified value.
+db.collection.find({ field: { $lte: value } }); Matches values that are less than or equal to a specified value.
+db.collection.find({ field: { $gte: value } }); Matches values that are greater than or equal to a specified value.
+db.collection.find({ field: { $ne: value } });  Matches all values that are not equal to a specified value.
+
+============Element Operators=========
+
+db.collection.find({ field: { $exists: true } });  Existence ($exists): Matches documents that have the specified field.
+db.collection.find({ field: { $type: 'string' } }); Matches documents where the value of a field is of a specific type.
+
+==========================================================================Join Example With Scenario=================================================================================
+
+
+users collection:
+
+[
+  { "_id": 1, "name": "Alice" },
+  { "_id": 2, "name": "Bob" },
+  { "_id": 3, "name": "Charlie" }
+]
+
+orders collection:
+
+[
+  { "_id": 101, "userId": 1, "productId": 101, "quantity": 2 },
+  { "_id": 102, "userId": 2, "productId": 102, "quantity": 1 },
+  { "_id": 103, "userId": 1, "productId": 103, "quantity": 3 }
+]
+
+products collection:
+
+[
+  { "_id": 101, "name": "Product A", "price": 10 },
+  { "_id": 102, "name": "Product B", "price": 20 },
+  { "_id": 103, "name": "Product C", "price": 15 }
+]
+
+
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "user"
+    }
+  },
+  {
+    $unwind: "$user" // Deconstruct the user array created by $lookup
+  },
+  {
+    $lookup: {
+      from: "products",
+      localField: "productId",
+      foreignField: "_id",
+      as: "product"
+    }
+  },
+  {
+    $unwind: "$product" // Deconstruct the product array created by $lookup
+  },
+  {
+    $project: {
+      _id: 1,
+      quantity: 1,
+      "user.name": 1,
+      "product.name": 1,
+      "product.price": 1,
+      totalAmount: { $multiply: ["$quantity", "$product.price"] }
+    }
+  }
+]);
+
+
+=====================================================Output======================================================
+
+[
+  {
+    "_id": 101,
+    "quantity": 2,
+    "user": { "name": "Alice" },
+    "product": { "name": "Product A", "price": 10 },
+    "totalAmount": 20
+  },
+  {
+    "_id": 102,
+    "quantity": 1,
+    "user": { "name": "Bob" },
+    "product": { "name": "Product B", "price": 20 },
+    "totalAmount": 20
+  },
+  {
+    "_id": 103,
+    "quantity": 3,
+    "user": { "name": "Alice" },
+    "product": { "name": "Product C", "price": 15 },
+    "totalAmount": 45
+  }
+]
